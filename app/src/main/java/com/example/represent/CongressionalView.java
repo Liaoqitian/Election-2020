@@ -46,10 +46,7 @@ public class CongressionalView extends AppCompatActivity {
             Random r = new Random();
             double randomLat = LAT_MIN + (LAT_MAX - LAT_MIN) * r.nextDouble();
             double randomLng = LNG_MIN + (LNG_MAX - LNG_MIN) * r.nextDouble();
-            try { LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng), locationText);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng), locationText);
             address = locationText.getText().toString();
         }
         else if (type.equals("currentLocation")) {
@@ -57,15 +54,17 @@ public class CongressionalView extends AppCompatActivity {
         }
 
         // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
-        printLocation(address, locationText);
+        // geo website: https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
+
+
+//        printLocation(address, locationText);
     }
 
     /** Convert LAT/LON to postal address */
-    private void LatLngToAddress(String lat, String lng, final TextView locationText) throws JSONException {
+    private void LatLngToAddress(String lat, String lng, final TextView locationText) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String gps_URL = "?latlng =" + lat + "," + lng;
         String full_URL = GEO_URL + gps_URL + "&key=" + API_KEY;
-        // https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, full_URL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
