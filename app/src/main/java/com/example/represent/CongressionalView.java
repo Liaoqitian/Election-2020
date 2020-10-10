@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+
 public class CongressionalView extends AppCompatActivity {
 
     static String API_KEY = "AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0";
@@ -41,19 +43,20 @@ public class CongressionalView extends AppCompatActivity {
         String type = getIntent().getExtras().getString("type");
         locationText = findViewById(R.id.location);
 
-        if (type.equals("inputLocation")) {
-            address = getIntent().getExtras().getString("address");
-            printLocation(address);
-        }
+        switch (type) {
+            case "inputLocation":
+                address = getIntent().getExtras().getString("address");
+                if (address != null) printLocation(address);
+                break;
+            case "randomLocation":
+                Random r = new Random();
+                double randomLat = LAT_MIN + (LAT_MAX - LAT_MIN) * r.nextDouble();
+                double randomLng = LNG_MIN + (LNG_MAX - LNG_MIN) * r.nextDouble();
+                LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng));
+                break;
+            case "currentLocation":
 
-        else if (type.equals("randomLocation")) {
-            Random r = new Random();
-            double randomLat = LAT_MIN + (LAT_MAX - LAT_MIN) * r.nextDouble();
-            double randomLng = LNG_MIN + (LNG_MAX - LNG_MIN) * r.nextDouble();
-            LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng));
-        }
-        else if (type.equals("currentLocation")) {
-
+                break;
         }
         // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
         // geo website: https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
