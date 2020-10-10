@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText addressInput = (EditText) findViewById(R.id.addressInput);
                 String address = addressInput.getText().toString();
                 Intent startIntent = new Intent(getApplicationContext(), CongressionalView.class);
+                startIntent.putExtra("type", "inputLocation");
                 startIntent.putExtra("address", address);
                 startActivity(startIntent);
             }
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(getApplicationContext(), CongressionalView.class);
-                startIntent.putExtra("type", "randeomLocation");
+                startIntent.putExtra("type", "randomLocation");
                 startActivity(startIntent);
             }
         });

@@ -9,6 +9,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +32,54 @@ public class CongressionalView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_congressional_view);
 
-        String address = getIntent().getExtras().getString("address");
-        TextView districtAddress = (TextView) findViewById(R.id.location);
-        try {
-            districtAddress.setText(addressToLatLng(address).get(0) + addressToLatLng(address).get(1));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String address = "";
+        String type = getIntent().getExtras().getString("type");
+        if (type.equals("inputLocation")) address = getIntent().getExtras().getString("address");
+        else if (type.equals("randomLocation")) {
+
         }
+        else if (type.equals("currentLocation")) {
+
+        }
+        // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
+
+        final TextView locationText = (TextView) findViewById(R.id.location);
+        locationText.setText(address); // test
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String place_URL = "?address=" + address.replace("\\s+", "");
+        String full_URL = CIVIC_URL + place_URL + "&key=" + API_KEY;
+        // Request a string response from the provided URL.
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, full_URL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String cityName = null;
+                        try {
+                            cityName = ((JSONObject) response.get("normalizedInput")).getString("city");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        String stateName = null;
+                        try {
+                            stateName = ((JSONObject) response.get("normalizedInput")).getString("state");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        locationText.setText(cityName + ", " + stateName);
+//                        locationText.setText(response.toString());
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                locationText.setText("That didn't work!");
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
     }
 
     /** Convert address to LAT/LON */
