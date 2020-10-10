@@ -48,7 +48,7 @@
         app:layout_constraintVertical_bias="0.255" />
 
     <EditText
-        android:id="@+id/address_input"
+        android:id="@+id/addressInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:autofillHints=""
@@ -58,7 +58,7 @@
         android:hint="@string/hint"
         android:inputType="textLongMessage|textEmailAddress"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,11 +80,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address_input"
+        app:layout_constraintTop_toBottomOf="@+id/addressInput"
         app:layout_constraintVertical_bias="0.147" />
 
     <Button
-        android:id="@+id/current_location"
+        android:id="@+id/currentLocation"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
@@ -92,14 +92,14 @@
         android:text="@string/currentLocation"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/random_location"
+        app:layout_constraintEnd_toStartOf="@+id/randomLocation"
         app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/go"
         app:layout_constraintVertical_bias="0.25" />
 
     <Button
-        android:id="@+id/random_location"
+        android:id="@+id/randomLocation"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
@@ -107,9 +107,9 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/randomLocation"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/current_location"
+        app:layout_constraintBottom_toBottomOf="@+id/currentLocation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/current_location"
+        app:layout_constraintTop_toTopOf="@+id/currentLocation"
         app:layout_constraintVertical_bias="0.0" />
 
 

@@ -7,63 +7,56 @@
     android:background="@drawable/background"
     tools:context=".CongressionalView">
 
-    <TextView
-        android:id="@+id/app_name2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="620dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/appName"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.62"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon" />
-
     <ImageView
-        android:id="@+id/icon2"
+        android:id="@+id/CongressonalLogo"
         android:layout_width="64dp"
-        android:layout_height="72dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="108dp"
         android:contentDescription="@string/icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.268"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintVertical_bias="0.051"
         app:srcCompat="@drawable/icon" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/CongressionalAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:layout_marginBottom="553dp"
         android:fontFamily="@font/montserrat"
-        android:text="@string/congressionalTitle"
+        android:text="@string/appName"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/CongressonalLogo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/CongressonalLogo"
+        app:layout_constraintTop_toTopOf="@+id/CongressonalLogo"
+        app:layout_constraintVertical_bias="0.491" />
 
     <TextView
-        android:id="@+id/district"
+        android:id="@+id/CongressionalTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
-        android:text="Region"
+        android:text="@string/congressionalTitle"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/CongressonalLogo"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="94dp"
+        android:layout_height="42dp"
+        android:text="@string/location"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CongressionalTitle"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

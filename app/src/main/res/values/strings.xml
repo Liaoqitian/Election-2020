@@ -5,6 +5,7 @@
     <string name="background">background</string>
     <string name="hint">Address / Zip Code</string>
     <string name="go">Go!</string>
+    <string name="location">location</string>
     <string name="currentLocation">Current Location</string>
     <string name="randomLocation">Random Location</string>
     <string name="congressionalTitle">Congress Representatives in</string>

@@ -25,7 +25,7 @@ public class CongressionalView extends AppCompatActivity {
         setContentView(R.layout.activity_congressional_view);
 
         String address = getIntent().getExtras().getString("address");
-        TextView districtAddress = (TextView) findViewById(R.id.district);
+        TextView districtAddress = (TextView) findViewById(R.id.location);
         try {
             districtAddress.setText(addressToLatLng(address).get(0) + addressToLatLng(address).get(1));
         } catch (JSONException e) {
