@@ -19,13 +19,17 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CongressionalView extends AppCompatActivity {
 
     static String API_KEY = "AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0";
     static String CIVIC_URL = "https://www.googleapis.com/civicinfo/v2/representatives";
     static String GEO_URL = "https://maps.googleapis.com/maps/api/geocode/json";
-    static String ADDRESS = "2530 Ridge Rd, Berkeley, CA";
+    static String ADDRESS = "5435 Lastrada St, Memphis, TN 38116, USA";
+
+    /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
+    double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,51 +38,78 @@ public class CongressionalView extends AppCompatActivity {
 
         String address = "";
         String type = getIntent().getExtras().getString("type");
-        if (type.equals("inputLocation")) address = getIntent().getExtras().getString("address");
-        else if (type.equals("randomLocation")) {
+        final TextView locationText = (TextView) findViewById(R.id.location);
 
+        if (type.equals("inputLocation")) address = getIntent().getExtras().getString("address");
+
+        else if (type.equals("randomLocation")) {
+            Random r = new Random();
+            double randomLat = LAT_MIN + (LAT_MAX - LAT_MIN) * r.nextDouble();
+            double randomLng = LNG_MIN + (LNG_MAX - LNG_MIN) * r.nextDouble();
+            try { LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng), locationText);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            address = locationText.getText().toString();
         }
         else if (type.equals("currentLocation")) {
 
         }
-        // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
 
-        final TextView locationText = (TextView) findViewById(R.id.location);
-        locationText.setText(address); // test
-        // Instantiate the RequestQueue.
+        // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
+        printLocation(address, locationText);
+    }
+
+    /** Convert LAT/LON to postal address */
+    private void LatLngToAddress(String lat, String lng, final TextView locationText) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String place_URL = "?address=" + address.replace("\\s+", "");
-        String full_URL = CIVIC_URL + place_URL + "&key=" + API_KEY;
-        // Request a string response from the provided URL.
+        String gps_URL = "?latlng =" + lat + "," + lng;
+        String full_URL = GEO_URL + gps_URL + "&key=" + API_KEY;
+        // https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, full_URL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        String cityName = null;
+                        String address = null;
                         try {
-                            cityName = ((JSONObject) response.get("normalizedInput")).getString("city");
+                            address = ((JSONArray) response.get("results")).getJSONObject(0).getString("formatted_address");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        String stateName = null;
+                        locationText.setText(address);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                locationText.setText("invalid");
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void printLocation(String address, final TextView locationText) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String place_URL = "?address=" + address.replace("\\s+", "");
+        String full_URL = CIVIC_URL + place_URL + "&key=" + API_KEY;
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, full_URL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String cityName = null, stateName = null;
                         try {
+                            cityName = ((JSONObject) response.get("normalizedInput")).getString("city");
                             stateName = ((JSONObject) response.get("normalizedInput")).getString("state");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         locationText.setText(cityName + ", " + stateName);
-//                        locationText.setText(response.toString());
-
                     }
-
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                locationText.setText("That didn't work!");
+                locationText.setText("Please enter a valid address!");
             }
         });
-
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
@@ -95,14 +126,7 @@ public class CongressionalView extends AppCompatActivity {
         return latlng;
     }
 
-    /** Convert LAT/LON to postal address */
-    private static String LatLngToAddress(String lat, String lng) throws JSONException {
-        String gps_URL = String.format("?latlng = %s, %s", lat, lng);
-        String full_URL = GEO_URL + gps_URL + "&key=" + API_KEY;
-        JSONObject response = new JSONObject(full_URL);
-        String address = ((JSONArray) response.get("results")).getJSONObject(0).getJSONObject("formatted_address").toString();
-        return address;
-    }
+
 
     /** Lookup Representatives for a given US address */
     private static void representatives(String address) throws JSONException {
