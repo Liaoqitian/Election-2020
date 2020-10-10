@@ -11,12 +11,12 @@
         android:id="@+id/CongressonalLogo"
         android:layout_width="64dp"
         android:layout_height="95dp"
-        android:layout_marginStart="108dp"
+        android:layout_marginStart="96dp"
         android:contentDescription="@string/icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@drawable/icon" />
 
     <TextView

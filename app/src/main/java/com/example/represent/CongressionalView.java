@@ -57,7 +57,7 @@ public class CongressionalView extends AppCompatActivity {
         // geo website: https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
 
 
-//        printLocation(address, locationText);
+        printLocation(address, locationText);
     }
 
     /** Convert LAT/LON to postal address */
