@@ -26,67 +26,70 @@ public class CongressionalView extends AppCompatActivity {
     static String API_KEY = "AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0";
     static String CIVIC_URL = "https://www.googleapis.com/civicinfo/v2/representatives";
     static String GEO_URL = "https://maps.googleapis.com/maps/api/geocode/json";
-    static String ADDRESS = "5435 Lastrada St, Memphis, TN 38116, USA";
+    static String ADDRESS = "16743 F Rd, Meade, KS 67864, USA";
 
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
+    private TextView locationText;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_congressional_view);
 
-        String address = "";
         String type = getIntent().getExtras().getString("type");
-        final TextView locationText = (TextView) findViewById(R.id.location);
+        locationText = findViewById(R.id.location);
 
-        if (type.equals("inputLocation")) address = getIntent().getExtras().getString("address");
+        if (type.equals("inputLocation")) {
+            address = getIntent().getExtras().getString("address");
+            printLocation(address);
+        }
 
         else if (type.equals("randomLocation")) {
             Random r = new Random();
             double randomLat = LAT_MIN + (LAT_MAX - LAT_MIN) * r.nextDouble();
             double randomLng = LNG_MIN + (LNG_MAX - LNG_MIN) * r.nextDouble();
-            LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng), locationText);
-            address = locationText.getText().toString();
+            LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng));
         }
         else if (type.equals("currentLocation")) {
 
         }
-
         // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
         // geo website: https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
 
+//        locationText.setText(address);
 
-        printLocation(address, locationText);
     }
 
     /** Convert LAT/LON to postal address */
-    private void LatLngToAddress(String lat, String lng, final TextView locationText) {
+    private void LatLngToAddress(String lat, String lng) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String gps_URL = "?latlng =" + lat + "," + lng;
+        String gps_URL = "?latlng=" + lat + "," + lng;
         String full_URL = GEO_URL + gps_URL + "&key=" + API_KEY;
+
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, full_URL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        String address = null;
                         try {
                             address = ((JSONArray) response.get("results")).getJSONObject(0).getString("formatted_address");
+                            printLocation(address);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        locationText.setText(address);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                locationText.setText("invalid");
+                String jsonError = new String(error.networkResponse.data);
+                address = jsonError;
             }
         });
         queue.add(stringRequest);
     }
 
-    private void printLocation(String address, final TextView locationText) {
+    private void printLocation(String address) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String place_URL = "?address=" + address.replace("\\s+", "");
         String full_URL = CIVIC_URL + place_URL + "&key=" + API_KEY;
