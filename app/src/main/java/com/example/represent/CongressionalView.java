@@ -46,7 +46,7 @@ public class CongressionalView extends AppCompatActivity {
         switch (type) {
             case "inputLocation":
                 address = getIntent().getExtras().getString("address");
-                if (address != null) printLocation(address);
+                if (address != null) printInformation(address);
                 break;
             case "randomLocation":
                 Random r = new Random();
@@ -77,7 +77,7 @@ public class CongressionalView extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             address = ((JSONArray) response.get("results")).getJSONObject(0).getString("formatted_address");
-                            printLocation(address);
+                            printInformation(address);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -92,7 +92,7 @@ public class CongressionalView extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    private void printLocation(String address) {
+    private void printInformation(String address) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String place_URL = "?address=" + address.replace("\\s+", "");
         String full_URL = CIVIC_URL + place_URL + "&key=" + API_KEY;
@@ -101,13 +101,35 @@ public class CongressionalView extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         String cityName = null, stateName = null;
+                        JSONArray offices = null, officials = null;
                         try {
                             cityName = ((JSONObject) response.get("normalizedInput")).getString("city");
                             stateName = ((JSONObject) response.get("normalizedInput")).getString("state");
+                            offices = (JSONArray) response.get("offices");
+                            officials = (JSONArray) response.get("officials");
+                            for (int i = 0; i < offices.length(); i++) {
+                                if (offices.getJSONObject(i).getString("name").equals("U.S. Senator")) {
+                                    System.out.println("U.S. Senators");
+                                    JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
+                                    for (int j = 0; j < index.length(); j++) {
+                                        printPerson(officials.getJSONObject((index.getInt(i))));
+                                    }
+                                } else if (offices.getJSONObject(i).getString("name").equals("U.S. Representative")) {
+                                    System.out.println("U.S. Representative");
+                                    JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
+                                    for (int j = 0; j < index.length(); j++) {
+                                        printPerson(officials.getJSONObject((index.getInt(i))));
+                                    }
+                                }
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         locationText.setText(cityName + ", " + stateName);
+
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -144,21 +166,7 @@ public class CongressionalView extends AppCompatActivity {
                 ", " + ((JSONObject) response.get("normalizedInput")).getJSONObject("state"));
         JSONArray offices = (JSONArray) response.get("offices");
         JSONArray officials = (JSONArray) response.get("officials");
-        for (int i = 0; i < offices.length(); i++) {
-            if (offices.getJSONObject(i).getString("name").equals("U.S. Senator")) {
-                System.out.println("U.S. Senators");
-                JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
-                for (int j = 0; j < index.length(); j++) {
-                    printPerson(officials.getJSONObject((index.getInt(i))));
-                }
-            } else if (offices.getJSONObject(i).getString("name").equals("U.S. Representative")) {
-                System.out.println("U.S. Representative");
-                JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
-                for (int j = 0; j < index.length(); j++) {
-                    printPerson(officials.getJSONObject((index.getInt(i))));
-                }
-            }
-        }
+
         System.out.println(" ");
     }
 
