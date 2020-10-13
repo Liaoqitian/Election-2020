@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".CongressionalView">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/background"
+tools:context=".CongressionalView">
 
     <TextView
         android:id="@+id/CongressionalTitle"
@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.107" />
+        app:layout_constraintVertical_bias="0.086" />
 
     <TextView
         android:id="@+id/location"
@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@+id/profileTwo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location"
-        tools:srcCompat="@drawable/ic_launcher_background" />
+        tools:srcCompat="@drawable/defaultprofile" />
 
     <ImageView
         android:id="@+id/profileTwo"
@@ -69,51 +69,97 @@
         app:layout_constraintTop_toBottomOf="@+id/profileTwo"
         app:srcCompat="@drawable/defaultprofile" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="181dp"
+        android:layout_marginBottom="43dp"
+        android:lineSpacingExtra="30sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/CongressionalTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/NameOne"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="+id/PartyOne"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toEndOf="@+id/profileOne"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        app:layout_constraintTop_toTopOf="@+id/profileOne" />
 
     <TextView
         android:id="@+id/PartyOne"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/InfoOne"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toEndOf="@+id/profileOne"
         app:layout_constraintTop_toBottomOf="@+id/NameOne"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.275" />
 
     <TextView
         android:id="@+id/InfoOne"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/profileOne"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/profileOne"
-        app:layout_constraintTop_toBottomOf="@+id/PartyOne"
-        app:layout_constraintVertical_bias="0.036" />
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toEndOf="@+id/profileOne" />
+
+    <TextView
+        android:id="@+id/NameTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/profileTwo"
+        app:layout_constraintTop_toTopOf="@+id/profileTwo" />
+
+    <TextView
+        android:id="@+id/PartyTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toEndOf="@+id/profileTwo"
+        app:layout_constraintTop_toBottomOf="@+id/NameTwo" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toEndOf="@+id/profileTwo"
+        app:layout_constraintTop_toBottomOf="@+id/PartyTwo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

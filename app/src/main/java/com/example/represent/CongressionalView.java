@@ -2,6 +2,7 @@ package com.example.represent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class CongressionalView extends AppCompatActivity {
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
     private TextView locationText;
+    private TextView NameOne, PartyOne, NameTwo, PartyTwo;
     private String address;
 
     @Override
@@ -42,6 +44,10 @@ public class CongressionalView extends AppCompatActivity {
 
         String type = getIntent().getExtras().getString("type");
         locationText = findViewById(R.id.location);
+        NameOne = findViewById(R.id.NameOne);
+        PartyOne = findViewById(R.id.PartyOne);
+        NameTwo = findViewById(R.id.NameTwo);
+        PartyTwo = findViewById(R.id.PartyTwo);
 
         switch (type) {
             case "inputLocation":
@@ -112,13 +118,23 @@ public class CongressionalView extends AppCompatActivity {
                                     System.out.println("U.S. Senators");
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     for (int j = 0; j < index.length(); j++) {
-                                        printPerson(officials.getJSONObject((index.getInt(i))));
+                                        JSONObject person = officials.getJSONObject((index.getInt(j)));
+                                        if (j == 0) {
+                                            NameOne.setText(person.getString("name"));
+                                            PartyOne.setText(person.getString("party").split("\\s+")[0]);
+                                        } else if (j == 1) {
+                                            NameTwo.setText(person.getString("name"));
+                                            String party = person.getString("party").split("\\s+")[0]; 
+                                            PartyTwo.setText(party);
+                                            if (party.equals("Republican")) PartyTwo.setTextColor(Color.RED);
+                                            else if (party.equals("Democratic")) PartyTwo.setTextColor(Color.BLUE);
+                                        }
                                     }
                                 } else if (offices.getJSONObject(i).getString("name").equals("U.S. Representative")) {
                                     System.out.println("U.S. Representative");
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     for (int j = 0; j < index.length(); j++) {
-                                        printPerson(officials.getJSONObject((index.getInt(i))));
+                                        printPerson(officials.getJSONObject((index.getInt(j))));
                                     }
                                 }
                             }
