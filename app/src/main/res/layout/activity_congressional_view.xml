@@ -4,8 +4,22 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@drawable/background"
+android:background="@drawable/space"
 tools:context=".CongressionalView">
+
+    <Button
+        android:id="@+id/NameThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="#00FFFFFF"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/profileThree"
+        app:layout_constraintTop_toTopOf="@+id/profileThree" />
 
     <TextView
         android:id="@+id/CongressionalTitle"
@@ -18,7 +32,7 @@ tools:context=".CongressionalView">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.086" />
+        app:layout_constraintVertical_bias="0.072" />
 
     <TextView
         android:id="@+id/location"
@@ -37,24 +51,26 @@ tools:context=".CongressionalView">
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription=""
+        android:contentDescription="@string/profileOne"
+        android:src="@drawable/defaultprofile"
         app:layout_constraintBottom_toTopOf="@+id/profileTwo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location"
-        tools:srcCompat="@drawable/defaultprofile" />
+        app:layout_constraintVertical_bias="0.51" />
 
     <ImageView
         android:id="@+id/profileTwo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="32dp"
+        android:contentDescription="@string/profileTwo"
+        android:src="@drawable/defaultprofile"
         app:layout_constraintBottom_toTopOf="@+id/profileThree"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileOne"
-        app:layout_constraintVertical_bias="0.51"
-        app:srcCompat="@drawable/icon" />
+        app:layout_constraintVertical_bias="0.51" />
 
 
     <ImageView
@@ -64,10 +80,11 @@ tools:context=".CongressionalView">
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="51dp"
+        android:contentDescription="@string/profileThree"
+        android:src="@drawable/defaultprofile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileTwo"
-        app:srcCompat="@drawable/defaultprofile" />
+        app:layout_constraintTop_toBottomOf="@+id/profileTwo" />
 
     <TextView
         android:id="@+id/textView"
@@ -84,16 +101,17 @@ tools:context=".CongressionalView">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <Button
         android:id="@+id/NameOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:background="#00FFFFFF"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        android:textSize="26sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toEndOf="@+id/profileOne"
         app:layout_constraintTop_toTopOf="@+id/profileOne" />
 
@@ -101,36 +119,24 @@ tools:context=".CongressionalView">
         android:id="@+id/PartyOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/InfoOne"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toEndOf="@+id/profileOne"
-        app:layout_constraintTop_toBottomOf="@+id/NameOne"
-        app:layout_constraintVertical_bias="0.275" />
-
-    <TextView
-        android:id="@+id/InfoOne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="TextView"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/profileOne"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toEndOf="@+id/profileOne" />
-
-    <TextView
-        android:id="@+id/NameTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        android:textSize="26sp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toEndOf="@+id/profileOne"
+        app:layout_constraintTop_toBottomOf="@+id/NameOne" />
+
+    <Button
+        android:id="@+id/NameTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="#00FFFFFF"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toEndOf="@+id/profileTwo"
@@ -140,7 +146,7 @@ tools:context=".CongressionalView">
         android:id="@+id/PartyTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -150,16 +156,16 @@ tools:context=".CongressionalView">
         app:layout_constraintTop_toBottomOf="@+id/NameTwo" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/PartyThree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toEndOf="@+id/profileTwo"
-        app:layout_constraintTop_toBottomOf="@+id/PartyTwo" />
+        app:layout_constraintStart_toEndOf="@+id/profileThree"
+        app:layout_constraintTop_toBottomOf="@+id/NameThree" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

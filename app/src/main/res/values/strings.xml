@@ -10,4 +10,8 @@
     <string name="randomLocation">Random Location</string>
     <string name="congressionalTitle">Congress Representatives in</string>
     <string name="invalidAddress">Invalid Address</string>
+    <string name="profileOne">profileOne</string>
+    <string name="profileTwo">profileTwo</string>
+    <string name="profileThree">profileThree</string>
+    <string name="moreInfo">More Info</string>
 </resources>

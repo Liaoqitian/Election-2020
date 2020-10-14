@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -34,7 +37,8 @@ public class CongressionalView extends AppCompatActivity {
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
     private TextView locationText;
-    private TextView NameOne, PartyOne, NameTwo, PartyTwo;
+    private Button NameOne, NameTwo, NameThree;
+    private TextView PartyOne, PartyTwo, PartyThree;
     private String address;
 
     @Override
@@ -48,6 +52,8 @@ public class CongressionalView extends AppCompatActivity {
         PartyOne = findViewById(R.id.PartyOne);
         NameTwo = findViewById(R.id.NameTwo);
         PartyTwo = findViewById(R.id.PartyTwo);
+        NameThree = findViewById(R.id.NameThree);
+        PartyThree = findViewById(R.id.PartyThree);
 
         switch (type) {
             case "inputLocation":
@@ -120,11 +126,18 @@ public class CongressionalView extends AppCompatActivity {
                                     for (int j = 0; j < index.length(); j++) {
                                         JSONObject person = officials.getJSONObject((index.getInt(j)));
                                         if (j == 0) {
-                                            NameOne.setText(person.getString("name"));
-                                            PartyOne.setText(person.getString("party").split("\\s+")[0]);
+                                            SpannableString name = new SpannableString(person.getString("name"));
+                                            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+                                            NameOne.setText(name);
+                                            String party = person.getString("party").split("\\s+")[0];
+                                            PartyOne.setText(party);
+                                            if (party.equals("Republican")) PartyOne.setTextColor(Color.RED);
+                                            else if (party.equals("Democratic")) PartyOne.setTextColor(Color.BLUE);
                                         } else if (j == 1) {
-                                            NameTwo.setText(person.getString("name"));
-                                            String party = person.getString("party").split("\\s+")[0]; 
+                                            SpannableString name = new SpannableString(person.getString("name"));
+                                            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+                                            NameTwo.setText(name);
+                                            String party = person.getString("party").split("\\s+")[0];
                                             PartyTwo.setText(party);
                                             if (party.equals("Republican")) PartyTwo.setTextColor(Color.RED);
                                             else if (party.equals("Democratic")) PartyTwo.setTextColor(Color.BLUE);
@@ -133,9 +146,14 @@ public class CongressionalView extends AppCompatActivity {
                                 } else if (offices.getJSONObject(i).getString("name").equals("U.S. Representative")) {
                                     System.out.println("U.S. Representative");
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
-                                    for (int j = 0; j < index.length(); j++) {
-                                        printPerson(officials.getJSONObject((index.getInt(j))));
-                                    }
+                                    JSONObject person = officials.getJSONObject((index.getInt(0)));
+                                    SpannableString name = new SpannableString(person.getString("name"));
+                                    name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+                                    NameThree.setText(name);
+                                    String party = person.getString("party").split("\\s+")[0];
+                                    PartyThree.setText(party);
+                                    if (party.equals("Republican")) PartyThree.setTextColor(Color.RED);
+                                    else if (party.equals("Democratic")) PartyThree.setTextColor(Color.BLUE);
                                 }
                             }
 
@@ -168,8 +186,6 @@ public class CongressionalView extends AppCompatActivity {
         latlng.add(lng);
         return latlng;
     }
-
-
 
     /** Lookup Representatives for a given US address */
     private static void representatives(String address) throws JSONException {
