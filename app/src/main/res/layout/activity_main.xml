@@ -11,46 +11,48 @@
         android:id="@+id/icon"
         android:layout_width="91dp"
         android:layout_height="101dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@string/icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.107"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/icon" />
 
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="26dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/appName"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/command"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/command"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/command"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/addressInput"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_name"
-        app:layout_constraintVertical_bias="0.255" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/addressInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
         android:autofillHints=""
         android:background="@android:color/white"
         android:fontFamily="@font/montserrat"
@@ -60,57 +62,94 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/go"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/command"
-        app:layout_constraintVertical_bias="0.093"
         tools:ignore="RtlCompat" />
 
     <Button
         android:id="@+id/go"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
         android:background="@android:color/holo_green_light"
         android:fontFamily="@font/montserrat"
         android:text="@string/go"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressInput"
-        app:layout_constraintVertical_bias="0.147" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/currentLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/or"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toLeftOf="@id/tvText"
+            android:background="#FFFFFF" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/tvText"
+            android:background="#FFFFFF" />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/currentLocation"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
         android:background="@android:color/white"
         android:fontFamily="@font/montserrat"
         android:text="@string/currentLocation"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/randomLocation"
-        app:layout_constraintHorizontal_bias="0.733"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/go"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintBottom_toTopOf="@+id/randomLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/randomLocation"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="52dp"
         android:background="@android:color/white"
         android:fontFamily="@font/montserrat"
         android:text="@string/randomLocation"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/currentLocation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/currentLocation"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

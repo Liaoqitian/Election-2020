@@ -1,17 +1,18 @@
 <resources>
     <string name="icon">icon</string>
     <string name="appName">Represent!</string>
-    <string name="command">Enter Your Address / Zip code</string>
+    <string name="command">Enter Your Zip code / Address</string>
     <string name="background">background</string>
-    <string name="hint">Address / Zip Code</string>
+    <string name="hint">Zip Code / Address </string>
     <string name="go">Go!</string>
     <string name="location">location</string>
-    <string name="currentLocation">Current Location</string>
-    <string name="randomLocation">Random Location</string>
+    <string name="currentLocation">Use Current Location</string>
+    <string name="randomLocation">Use Random Location</string>
     <string name="congressionalTitle">Congress Representatives in</string>
     <string name="invalidAddress">Invalid Address</string>
     <string name="profileOne">profileOne</string>
     <string name="profileTwo">profileTwo</string>
     <string name="profileThree">profileThree</string>
     <string name="moreInfo">More Info</string>
+    <string name="or">or</string>
 </resources>
