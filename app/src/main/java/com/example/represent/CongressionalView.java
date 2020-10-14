@@ -2,11 +2,16 @@ package com.example.represent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -21,6 +26,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,9 +46,33 @@ public class CongressionalView extends AppCompatActivity {
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
     private TextView locationText;
+    private ImageView profileOne, profileTwo, profileThree;
     private Button NameOne, NameTwo, NameThree;
     private TextView PartyOne, PartyTwo, PartyThree;
     private String address;
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +80,9 @@ public class CongressionalView extends AppCompatActivity {
         setContentView(R.layout.activity_congressional_view);
 
         String type = getIntent().getExtras().getString("type");
+        profileOne = findViewById(R.id.profileOne);
+        profileTwo = findViewById(R.id.profileTwo);
+        profileThree = findViewById(R.id.profileThree);
         locationText = findViewById(R.id.location);
         NameOne = findViewById(R.id.NameOne);
         PartyOne = findViewById(R.id.PartyOne);
@@ -124,8 +160,9 @@ public class CongressionalView extends AppCompatActivity {
                                     System.out.println("U.S. Senators");
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     for (int j = 0; j < index.length(); j++) {
-                                        JSONObject person = officials.getJSONObject((index.getInt(j)));
+                                        final JSONObject person = officials.getJSONObject((index.getInt(j)));
                                         if (j == 0) {
+                                            new DownloadImageTask(profileOne).execute(person.getString("photoUrl"));
                                             SpannableString name = new SpannableString(person.getString("name"));
                                             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
                                             NameOne.setText(name);
@@ -134,6 +171,7 @@ public class CongressionalView extends AppCompatActivity {
                                             if (party.equals("Republican")) PartyOne.setTextColor(Color.RED);
                                             else if (party.equals("Democratic")) PartyOne.setTextColor(Color.BLUE);
                                         } else if (j == 1) {
+                                            new DownloadImageTask(profileTwo).execute(person.getString("photoUrl"));
                                             SpannableString name = new SpannableString(person.getString("name"));
                                             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
                                             NameTwo.setText(name);
@@ -147,6 +185,7 @@ public class CongressionalView extends AppCompatActivity {
                                     System.out.println("U.S. Representative");
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     JSONObject person = officials.getJSONObject((index.getInt(0)));
+                                    new DownloadImageTask(profileThree).execute(person.getString("photoUrl"));
                                     SpannableString name = new SpannableString(person.getString("name"));
                                     name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
                                     NameThree.setText(name);
@@ -161,9 +200,6 @@ public class CongressionalView extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         locationText.setText(cityName + ", " + stateName);
-
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override

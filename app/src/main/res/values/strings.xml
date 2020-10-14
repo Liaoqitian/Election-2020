@@ -15,4 +15,6 @@
     <string name="profileThree">profileThree</string>
     <string name="moreInfo">More Info</string>
     <string name="or">or</string>
+    <string name="Name">Name</string>
+    <string name="Party">Party</string>
 </resources>

@@ -9,15 +9,15 @@ tools:context=".CongressionalView">
 
     <Button
         android:id="@+id/NameThree"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="#00FFFFFF"
-        android:text="TextView"
+        android:text="@string/Name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/profileThree"
         app:layout_constraintTop_toTopOf="@+id/profileThree" />
 
@@ -58,7 +58,7 @@ tools:context=".CongressionalView">
         app:layout_constraintBottom_toTopOf="@+id/profileTwo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location"
-        app:layout_constraintVertical_bias="0.51" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
         android:id="@+id/profileTwo"
@@ -70,7 +70,7 @@ tools:context=".CongressionalView">
         app:layout_constraintBottom_toTopOf="@+id/profileThree"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileOne"
-        app:layout_constraintVertical_bias="0.51" />
+        app:layout_constraintVertical_bias="0.5" />
 
 
     <ImageView
@@ -103,15 +103,15 @@ tools:context=".CongressionalView">
 
     <Button
         android:id="@+id/NameOne"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="#00FFFFFF"
-        android:text="TextView"
+        android:text="@string/Name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toEndOf="@+id/profileOne"
         app:layout_constraintTop_toTopOf="@+id/profileOne" />
 
@@ -120,25 +120,25 @@ tools:context=".CongressionalView">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/Party"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/profileOne"
         app:layout_constraintTop_toBottomOf="@+id/NameOne" />
 
     <Button
         android:id="@+id/NameTwo"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="#00FFFFFF"
-        android:text="TextView"
+        android:text="@string/Name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/profileTwo"
         app:layout_constraintTop_toTopOf="@+id/profileTwo" />
 
@@ -147,11 +147,11 @@ tools:context=".CongressionalView">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/Party"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/profileTwo"
         app:layout_constraintTop_toBottomOf="@+id/NameTwo" />
 
@@ -160,7 +160,7 @@ tools:context=".CongressionalView">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/Party"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
