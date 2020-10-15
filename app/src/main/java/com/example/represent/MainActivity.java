@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startIntent = new Intent(getApplicationContext(), CongressionalView.class);
                 startIntent.putExtra("type", "currentLocation");
+
                 startActivity(startIntent);
             }
         });
@@ -61,4 +62,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

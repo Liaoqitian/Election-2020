@@ -13,15 +13,16 @@
 import requests
 import json
 import random
+from pprint import pprint
 
 # put your API key here
-API_KEY = ""
+API_KEY = "AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0"
 
 CIVIC_URL = "https://www.googleapis.com/civicinfo/v2/representatives"
 GEO_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 
 # example address to test with (i.e. Jacobs Hall)
-ADDRESS = "2530 Ridge Rd, Berkeley, CA"
+ADDRESS = "951 Jackson St, Mountain View, CA, 94043"
 
 # crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist
 LAT_MAX = 41.8
@@ -34,17 +35,17 @@ def main():
 	# if you have a valid US postal address you can look up the representatives directly
 	Representatives(ADDRESS)
 	# if you have a valid zip code you can look up the representatives directly
-	Representatives("10011")
+	# Representatives("10011")
 	# you can get an address from a GEO location 
-	gps = addressToLatLng("77836")
-	address = LatLngToAddress(gps[0], gps[1])
-	Representatives(address)
+	# gps = addressToLatLng("77836")
+	# address = LatLngToAddress(gps[0], gps[1])
+	# Representatives(address)
 	# or pick random GEO locations within the US (this is an incomplete boundry)
-	for i in range(1,3):
-		randLat = random.uniform(LAT_MIN, LAT_MAX)
-		randLng = random.uniform(LNG_MIN, LNG_MAX)
-		address = LatLngToAddress(randLat, randLng)
-		Representatives(address)
+	# for i in range(1,3):
+	# 	randLat = random.uniform(LAT_MIN, LAT_MAX)
+	# 	randLng = random.uniform(LNG_MIN, LNG_MAX)
+	# 	address = LatLngToAddress(randLat, randLng)
+	# 	Representatives(address)
 
 
 # Convert address to LAT/LNG 
@@ -76,6 +77,7 @@ def Representatives(address):
 	place_url = "?address=" + address.replace(' ', '+')
 	full_url = CIVIC_URL + place_url + "&key=" + API_KEY
 	response = json.loads(requests.get(full_url).text)
+	pprint(response)
 	# print the city and state 
 	print(response["normalizedInput"]["city"] + ", " + response["normalizedInput"]["state"])
 	offices = response["offices"]

@@ -1,10 +1,17 @@
 package com.example.represent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -25,6 +32,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,8 +43,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
-
 
 
 public class CongressionalView extends AppCompatActivity {
@@ -45,14 +56,15 @@ public class CongressionalView extends AppCompatActivity {
 
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
-    private TextView locationText;
+    private TextView locationText, PartyOne, PartyTwo, PartyThree;
     private ImageView profileOne, profileTwo, profileThree;
     private Button NameOne, NameTwo, NameThree;
-    private TextView PartyOne, PartyTwo, PartyThree;
     private String address;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
+
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
@@ -69,6 +81,7 @@ public class CongressionalView extends AppCompatActivity {
             }
             return bmp;
         }
+
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
@@ -100,21 +113,46 @@ public class CongressionalView extends AppCompatActivity {
                 Random r = new Random();
                 double randomLat = LAT_MIN + (LAT_MAX - LAT_MIN) * r.nextDouble();
                 double randomLng = LNG_MIN + (LNG_MAX - LNG_MIN) * r.nextDouble();
-                LatLngToAddress(String.valueOf(randomLat), String.valueOf(randomLng));
+                processRandomLocation(String.valueOf(randomLat), String.valueOf(randomLng));
                 break;
             case "currentLocation":
-
+//                locationText.setText("entered");
+                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+                getLocation();
+//                locationText.setText("processed");
                 break;
         }
         // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
         // geo website: https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
-
-//        locationText.setText(address);
-
     }
 
-    /** Convert LAT/LON to postal address */
-    private void LatLngToAddress(String lat, String lng) {
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            locationText.setText("no permission");
+            ActivityCompat.requestPermissions(CongressionalView.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                Location location = task.getResult();
+                if (location != null) {
+                    Geocoder geocoder = new Geocoder(CongressionalView.this, Locale.getDefault());
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        String address = addresses.get(0).getAddressLine(0);
+                        printInformation(address);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+
+    /** Process a random location by convert LAT/LON to postal address, then printing out relevant information */
+    private void processRandomLocation(String lat, String lng) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String gps_URL = "?latlng=" + lat + "," + lng;
         String full_URL = GEO_URL + gps_URL + "&key=" + API_KEY;
