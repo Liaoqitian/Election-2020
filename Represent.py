@@ -22,7 +22,7 @@ CIVIC_URL = "https://www.googleapis.com/civicinfo/v2/representatives"
 GEO_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 
 # example address to test with (i.e. Jacobs Hall)
-ADDRESS = "Canyon, TX"
+ADDRESS = "Clarksville, TN"
 
 # crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist
 LAT_MAX = 41.8

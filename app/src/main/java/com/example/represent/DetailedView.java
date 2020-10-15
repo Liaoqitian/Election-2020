@@ -10,37 +10,14 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.InputStream;
 
 public class DetailedView extends AppCompatActivity {
 
     ImageView bigProfileIv;
     TextView nameTv, partyTv, websiteTv, phoneTv;
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap bmp = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                bmp = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return bmp;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +40,6 @@ public class DetailedView extends AppCompatActivity {
         partyTv.setText(party + " Party");
         phoneTv.setText(phone);
         websiteTv.setText(website);
-        if (photoUrl != null) new DownloadImageTask(bigProfileIv).execute(photoUrl);
-
+        Picasso.get().load(photoUrl).into(bigProfileIv);
     }
 }

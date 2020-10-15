@@ -38,6 +38,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,41 +58,17 @@ public class CongressionalView extends AppCompatActivity {
     static String API_KEY = "AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0";
     static String CIVIC_URL = "https://www.googleapis.com/civicinfo/v2/representatives";
     static String GEO_URL = "https://maps.googleapis.com/maps/api/geocode/json";
+    static String VOTE_URL = "https://www.googleapis.com/civicinfo/v2/voterinfo";
     static String ADDRESS = "16743 F Rd, Meade, KS 67864, USA";
 
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
     private TextView locationTv, partyOneTv, partyTwoTv, partyThreeTv;
-    private ImageView profileOne, profileTwo, profileThree;
+    private ImageView profileOneIv, profileTwoIv, profileThreeIv;
     private Button nameOneBtn, nameTwoBtn, nameThreeBtn;
     private String address, nameOne, nameTwo, nameThree, partyOne, partyTwo, partyThree, phoneOne, phoneTwo, phoneThree, websiteOne, websiteTwo, websiteThree,
             photoUrlOne, photoUrlTwo, photoUrlThree, linkOne, linkTwo, linkThree;
     private FusedLocationProviderClient fusedLocationProviderClient;
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap bmp = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                bmp = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return bmp;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +76,9 @@ public class CongressionalView extends AppCompatActivity {
         setContentView(R.layout.activity_congressional_view);
 
         String type = getIntent().getExtras().getString("type");
-        profileOne = findViewById(R.id.profileOne);
-        profileTwo = findViewById(R.id.profileTwo);
-        profileThree = findViewById(R.id.profileThree);
+        profileOneIv = findViewById(R.id.profileOne);
+        profileTwoIv = findViewById(R.id.profileTwo);
+        profileThreeIv = findViewById(R.id.profileThree);
         locationTv = findViewById(R.id.location);
         nameOneBtn = findViewById(R.id.NameOne);
         partyOneTv = findViewById(R.id.PartyOne);
@@ -257,7 +234,7 @@ public class CongressionalView extends AppCompatActivity {
                                             // Set up the photo of U.S. Senator One
                                             if (person.has("photoUrl")) {
                                                 photoUrlOne = person.getString("photoUrl");
-                                                new DownloadImageTask(profileOne).execute(photoUrlOne);
+                                                Picasso.get().load(photoUrlOne).into(profileOneIv);
                                             } else photoUrlOne = null;
 
                                             // Set up other relevant information of U.S. Senator One
@@ -280,7 +257,7 @@ public class CongressionalView extends AppCompatActivity {
                                             // Set up the photo of U.S. Senator Two
                                             if (person.has("photoUrl")) {
                                                 photoUrlTwo = person.getString("photoUrl");
-                                                new DownloadImageTask(profileTwo).execute(photoUrlTwo);
+                                                Picasso.get().load(photoUrlTwo).into(profileTwoIv);
                                             } else photoUrlTwo = null;
 
                                             // Set up other relevant information of U.S. Senator Two
@@ -308,7 +285,7 @@ public class CongressionalView extends AppCompatActivity {
                                     // Set up the photo of U.S. Representative
                                     if (person.has("photoUrl")) {
                                         photoUrlThree = person.getString("photoUrl");
-                                        new DownloadImageTask(profileThree).execute(photoUrlThree);
+                                        Picasso.get().load(photoUrlThree).into(profileThreeIv);
                                     } else photoUrlThree = null;
 
                                     // Set up other relevant information of U.S. Representative
@@ -329,39 +306,5 @@ public class CongressionalView extends AppCompatActivity {
             }
         });
         queue.add(stringRequest);
-    }
-
-    /** Convert address to LAT/LON */
-    private static List<String> addressToLatLng(String address) throws JSONException {
-        List<String> latlng = new ArrayList();
-        String place_URL = "?address=" + address.replace(' ', '+');
-        String full_URL = GEO_URL + place_URL + "&key=" + API_KEY;
-        JSONObject response = new JSONObject(full_URL);
-        String lat = ((JSONArray) response.get("results")).getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lat").toString();
-        String lng = ((JSONArray) response.get("results")).getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lng").toString();
-        latlng.add(lat);
-        latlng.add(lng);
-        return latlng;
-    }
-
-    /** Lookup Representatives for a given US address */
-    private static void representatives(String address) throws JSONException {
-        String place_URL = "?address=" + address.replace("\\s+", "");
-        String full_URL = CIVIC_URL + place_URL + "&key=" + API_KEY;
-        JSONObject response = new JSONObject(full_URL);
-
-        // Print the city and state
-        System.out.println(((JSONObject) response.get("normalizedInput")).getJSONObject("city") +
-                ", " + ((JSONObject) response.get("normalizedInput")).getJSONObject("state"));
-        JSONArray offices = (JSONArray) response.get("offices");
-        JSONArray officials = (JSONArray) response.get("officials");
-
-        System.out.println(" ");
-    }
-
-    private static String printPerson(JSONObject person) throws JSONException {
-        String res = "   " + person.getString("name") + " [" + person.getJSONArray("party").getString(0) + "] "
-                + person.getJSONArray("phones").getString(0) + " " + person.getJSONArray("urls").getString(0);
-        return res;
     }
 }
