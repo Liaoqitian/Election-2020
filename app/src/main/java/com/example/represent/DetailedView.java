@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,8 +39,10 @@ public class DetailedView extends AppCompatActivity {
 
         nameTv.setText(name);
         partyTv.setText(party + " Party");
+        if (party.equals("Republican")) partyTv.setTextColor(Color.RED);
+        else if (party.equals("Democratic")) partyTv.setTextColor(Color.BLUE);
         phoneTv.setText(phone);
         websiteTv.setText(website);
-        Picasso.get().load(photoUrl).into(bigProfileIv);
+        if (photoUrl != null) Picasso.get().load(photoUrl).into(bigProfileIv);
     }
 }
