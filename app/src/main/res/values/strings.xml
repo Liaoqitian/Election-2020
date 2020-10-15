@@ -13,8 +13,13 @@
     <string name="profileOne">profileOne</string>
     <string name="profileTwo">profileTwo</string>
     <string name="profileThree">profileThree</string>
+    <string name="bigProfile">bigProfile</string>
+    <string name="website">website</string>
+    <string name="phone">phone</string>
+    <string name="twitter">twitter</string>
     <string name="moreInfo">More Info</string>
     <string name="or">or</string>
     <string name="Name">Name</string>
     <string name="Party">Party</string>
+    <string name="blank"></string>
 </resources>

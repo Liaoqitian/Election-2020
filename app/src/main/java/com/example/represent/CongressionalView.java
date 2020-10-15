@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +49,9 @@ import java.util.Locale;
 import java.util.Random;
 
 
+// civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
+// geo website: https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
+
 public class CongressionalView extends AppCompatActivity {
 
     static String API_KEY = "AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0";
@@ -56,10 +61,11 @@ public class CongressionalView extends AppCompatActivity {
 
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
-    private TextView locationText, PartyOne, PartyTwo, PartyThree;
+    private TextView locationTv, partyOneTv, partyTwoTv, partyThreeTv;
     private ImageView profileOne, profileTwo, profileThree;
-    private Button NameOne, NameTwo, NameThree;
-    private String address;
+    private Button nameOneBtn, nameTwoBtn, nameThreeBtn;
+    private String address, nameOne, nameTwo, nameThree, partyOne, partyTwo, partyThree, phoneOne, phoneTwo, phoneThree, websiteOne, websiteTwo, websiteThree,
+            photoUrlOne, photoUrlTwo, photoUrlThree, linkOne, linkTwo, linkThree;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -96,13 +102,13 @@ public class CongressionalView extends AppCompatActivity {
         profileOne = findViewById(R.id.profileOne);
         profileTwo = findViewById(R.id.profileTwo);
         profileThree = findViewById(R.id.profileThree);
-        locationText = findViewById(R.id.location);
-        NameOne = findViewById(R.id.NameOne);
-        PartyOne = findViewById(R.id.PartyOne);
-        NameTwo = findViewById(R.id.NameTwo);
-        PartyTwo = findViewById(R.id.PartyTwo);
-        NameThree = findViewById(R.id.NameThree);
-        PartyThree = findViewById(R.id.PartyThree);
+        locationTv = findViewById(R.id.location);
+        nameOneBtn = findViewById(R.id.NameOne);
+        partyOneTv = findViewById(R.id.PartyOne);
+        nameTwoBtn = findViewById(R.id.NameTwo);
+        partyTwoTv = findViewById(R.id.PartyTwo);
+        nameThreeBtn = findViewById(R.id.NameThree);
+        partyThreeTv = findViewById(R.id.PartyThree);
 
         switch (type) {
             case "inputLocation":
@@ -116,20 +122,56 @@ public class CongressionalView extends AppCompatActivity {
                 processRandomLocation(String.valueOf(randomLat), String.valueOf(randomLng));
                 break;
             case "currentLocation":
-//                locationText.setText("entered");
                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
                 getLocation();
-//                locationText.setText("processed");
                 break;
         }
-        // civic website: https://www.googleapis.com/civicinfo/v2/representatives?address=94704&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
-        // geo website: https://maps.googleapis.com/maps/api/geocode/json?latlng=35,-90&key=AIzaSyDugNQO9vZxbi68BQnReZCd_CeM-cg-WW0
+
+        nameOneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(getApplicationContext(), DetailedView.class);
+                startIntent.putExtra("name", nameOne);
+                startIntent.putExtra("party", partyOne);
+                startIntent.putExtra("website", websiteOne);
+                startIntent.putExtra("phone", phoneOne);
+                startIntent.putExtra("photoUrl", photoUrlOne);
+                startActivity(startIntent);
+            }
+        });
+
+        nameTwoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(getApplicationContext(), DetailedView.class);
+                startIntent.putExtra("name", nameTwo);
+                startIntent.putExtra("party", partyTwo);
+                startIntent.putExtra("website", websiteTwo);
+                startIntent.putExtra("phone", phoneTwo);
+                startIntent.putExtra("photoUrl", photoUrlTwo);
+                startActivity(startIntent);
+            }
+        });
+
+        nameThreeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(getApplicationContext(), DetailedView.class);
+                startIntent.putExtra("name", nameThree);
+                startIntent.putExtra("party", partyThree);
+                startIntent.putExtra("website", websiteThree);
+                startIntent.putExtra("phone", phoneThree);
+                startIntent.putExtra("photoUrl", photoUrlThree);
+                startActivity(startIntent);
+            }
+        });
+
     }
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            locationText.setText("no permission");
+            locationTv.setText("no permission");
             ActivityCompat.requestPermissions(CongressionalView.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -195,54 +237,73 @@ public class CongressionalView extends AppCompatActivity {
                             officials = (JSONArray) response.get("officials");
                             for (int i = 0; i < offices.length(); i++) {
                                 if (offices.getJSONObject(i).getString("name").equals("U.S. Senator")) {
-                                    System.out.println("U.S. Senators");
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     for (int j = 0; j < index.length(); j++) {
                                         final JSONObject person = officials.getJSONObject((index.getInt(j)));
                                         if (j == 0) {
-                                            new DownloadImageTask(profileOne).execute(person.getString("photoUrl"));
+                                            nameOne = person.getString("name");
                                             SpannableString name = new SpannableString(person.getString("name"));
                                             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
-                                            NameOne.setText(name);
+                                            nameOneBtn.setText(name);
                                             String party = person.getString("party").split("\\s+")[0];
-                                            PartyOne.setText(party);
-                                            if (party.equals("Republican")) PartyOne.setTextColor(Color.RED);
-                                            else if (party.equals("Democratic")) PartyOne.setTextColor(Color.BLUE);
+                                            partyOne = party;
+                                            partyOneTv.setText(party);
+                                            if (party.equals("Republican")) partyOneTv.setTextColor(Color.RED);
+                                            else if (party.equals("Democratic")) partyOneTv.setTextColor(Color.BLUE);
+                                            if (person.has("photoUrl")) {
+                                                photoUrlOne = person.getString("photoUrl");
+                                                new DownloadImageTask(profileOne).execute(photoUrlOne);
+                                            } else photoUrlOne = "";
+                                            phoneOne = person.getJSONArray("phones").getString(0);
+                                            websiteOne = person.getJSONArray("urls").getString(0);
                                         } else if (j == 1) {
-                                            new DownloadImageTask(profileTwo).execute(person.getString("photoUrl"));
+                                            nameTwo = person.getString("name");
                                             SpannableString name = new SpannableString(person.getString("name"));
                                             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
-                                            NameTwo.setText(name);
+                                            nameTwoBtn.setText(name);
                                             String party = person.getString("party").split("\\s+")[0];
-                                            PartyTwo.setText(party);
-                                            if (party.equals("Republican")) PartyTwo.setTextColor(Color.RED);
-                                            else if (party.equals("Democratic")) PartyTwo.setTextColor(Color.BLUE);
+                                            partyTwo = party;
+                                            partyTwoTv.setText(party);
+                                            if (party.equals("Republican")) partyTwoTv.setTextColor(Color.RED);
+                                            else if (party.equals("Democratic")) partyTwoTv.setTextColor(Color.BLUE);
+                                            if (person.has("photoUrl")) {
+                                                photoUrlTwo = person.getString("photoUrl");
+                                                new DownloadImageTask(profileTwo).execute(photoUrlTwo);
+                                            } else photoUrlTwo = "";
+                                            phoneTwo = person.getJSONArray("phones").getString(0);
+                                            websiteTwo = person.getJSONArray("urls").getString(0);
                                         }
                                     }
                                 } else if (offices.getJSONObject(i).getString("name").equals("U.S. Representative")) {
-                                    System.out.println("U.S. Representative");
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     JSONObject person = officials.getJSONObject((index.getInt(0)));
-                                    new DownloadImageTask(profileThree).execute(person.getString("photoUrl"));
+                                    nameThree = person.getString("name");
                                     SpannableString name = new SpannableString(person.getString("name"));
                                     name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
-                                    NameThree.setText(name);
+                                    nameThreeBtn.setText(name);
                                     String party = person.getString("party").split("\\s+")[0];
-                                    PartyThree.setText(party);
-                                    if (party.equals("Republican")) PartyThree.setTextColor(Color.RED);
-                                    else if (party.equals("Democratic")) PartyThree.setTextColor(Color.BLUE);
+                                    partyThree = party;
+                                    partyThreeTv.setText(party);
+                                    if (party.equals("Republican")) partyThreeTv.setTextColor(Color.RED);
+                                    else if (party.equals("Democratic")) partyThreeTv.setTextColor(Color.BLUE);
+                                    if (person.has("photoUrl")) {
+                                        photoUrlThree = person.getString("photoUrl");
+                                        new DownloadImageTask(profileThree).execute(photoUrlThree);
+                                    } else photoUrlThree = "";
+                                    phoneThree = person.getJSONArray("phones").getString(0);
+                                    websiteThree = person.getJSONArray("urls").getString(0);
                                 }
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        locationText.setText(cityName + ", " + stateName);
+                        locationTv.setText(cityName + ", " + stateName);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                locationText.setText("Please enter a valid address!");
+                locationTv.setText("Please enter a valid address!");
             }
         });
         queue.add(stringRequest);
