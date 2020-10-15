@@ -241,35 +241,49 @@ public class CongressionalView extends AppCompatActivity {
                                     for (int j = 0; j < index.length(); j++) {
                                         final JSONObject person = officials.getJSONObject((index.getInt(j)));
                                         if (j == 0) {
+                                            // Set up the name of U.S. Senator One
                                             nameOne = person.getString("name");
                                             SpannableString name = new SpannableString(person.getString("name"));
                                             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
                                             nameOneBtn.setText(name);
+
+                                            // Set up the party of U.S. Senator One
                                             String party = person.getString("party").split("\\s+")[0];
                                             partyOne = party;
                                             partyOneTv.setText(party);
                                             if (party.equals("Republican")) partyOneTv.setTextColor(Color.RED);
                                             else if (party.equals("Democratic")) partyOneTv.setTextColor(Color.BLUE);
+
+                                            // Set up the photo of U.S. Senator One
                                             if (person.has("photoUrl")) {
                                                 photoUrlOne = person.getString("photoUrl");
                                                 new DownloadImageTask(profileOne).execute(photoUrlOne);
-                                            } else photoUrlOne = "";
+                                            } else photoUrlOne = null;
+
+                                            // Set up other relevant information of U.S. Senator One
                                             phoneOne = person.getJSONArray("phones").getString(0);
                                             websiteOne = person.getJSONArray("urls").getString(0);
                                         } else if (j == 1) {
+                                            // Set up the name of U.S. Senator Two
                                             nameTwo = person.getString("name");
                                             SpannableString name = new SpannableString(person.getString("name"));
                                             name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
                                             nameTwoBtn.setText(name);
+
+                                            // Set up the party of U.S. Senator Two
                                             String party = person.getString("party").split("\\s+")[0];
                                             partyTwo = party;
                                             partyTwoTv.setText(party);
                                             if (party.equals("Republican")) partyTwoTv.setTextColor(Color.RED);
                                             else if (party.equals("Democratic")) partyTwoTv.setTextColor(Color.BLUE);
+
+                                            // Set up the photo of U.S. Senator Two
                                             if (person.has("photoUrl")) {
                                                 photoUrlTwo = person.getString("photoUrl");
                                                 new DownloadImageTask(profileTwo).execute(photoUrlTwo);
-                                            } else photoUrlTwo = "";
+                                            } else photoUrlTwo = null;
+
+                                            // Set up other relevant information of U.S. Senator Two
                                             phoneTwo = person.getJSONArray("phones").getString(0);
                                             websiteTwo = person.getJSONArray("urls").getString(0);
                                         }
@@ -277,19 +291,27 @@ public class CongressionalView extends AppCompatActivity {
                                 } else if (offices.getJSONObject(i).getString("name").equals("U.S. Representative")) {
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     JSONObject person = officials.getJSONObject((index.getInt(0)));
+
+                                    // Set up the name of U.S. Representative
                                     nameThree = person.getString("name");
                                     SpannableString name = new SpannableString(person.getString("name"));
                                     name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
                                     nameThreeBtn.setText(name);
+
+                                    // Set up the party of U.S. Representative
                                     String party = person.getString("party").split("\\s+")[0];
                                     partyThree = party;
                                     partyThreeTv.setText(party);
                                     if (party.equals("Republican")) partyThreeTv.setTextColor(Color.RED);
                                     else if (party.equals("Democratic")) partyThreeTv.setTextColor(Color.BLUE);
+
+                                    // Set up the photo of U.S. Representative
                                     if (person.has("photoUrl")) {
                                         photoUrlThree = person.getString("photoUrl");
                                         new DownloadImageTask(profileThree).execute(photoUrlThree);
-                                    } else photoUrlThree = "";
+                                    } else photoUrlThree = null;
+
+                                    // Set up other relevant information of U.S. Representative
                                     phoneThree = person.getJSONArray("phones").getString(0);
                                     websiteThree = person.getJSONArray("urls").getString(0);
                                 }

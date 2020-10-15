@@ -63,8 +63,7 @@ public class DetailedView extends AppCompatActivity {
         partyTv.setText(party + " Party");
         phoneTv.setText(phone);
         websiteTv.setText(website);
-
-        if (!photoUrl.equals("")) new DownloadImageTask(bigProfileIv).execute(photoUrl);
+        if (photoUrl != null) new DownloadImageTask(bigProfileIv).execute(photoUrl);
 
     }
 }
