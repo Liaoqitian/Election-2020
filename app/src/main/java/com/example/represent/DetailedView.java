@@ -14,7 +14,7 @@ import java.io.InputStream;
 
 public class DetailedView extends AppCompatActivity {
 
-    ImageView bigProfile;
+    ImageView bigProfileIv;
     TextView nameTv, partyTv, websiteTv, phoneTv;
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -53,6 +53,7 @@ public class DetailedView extends AppCompatActivity {
         String phone = getIntent().getExtras().getString("phone");
         String website = getIntent().getExtras().getString("website");
 
+        bigProfileIv = findViewById(R.id.bigProfile);
         nameTv = findViewById(R.id.name);
         partyTv = findViewById(R.id.party);
         websiteTv = findViewById(R.id.website);
@@ -63,7 +64,7 @@ public class DetailedView extends AppCompatActivity {
         phoneTv.setText(phone);
         websiteTv.setText(website);
 
-        if (!photoUrl.equals("")) new DetailedView.DownloadImageTask(bigProfile).execute(photoUrl);
+        if (!photoUrl.equals("")) new DownloadImageTask(bigProfileIv).execute(photoUrl);
 
     }
 }
