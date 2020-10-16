@@ -17,7 +17,7 @@ https://www.youtube.com/watch?v=rDSYECEj4tk&t=2s
 - **MAIN VIEW**
 
   A user opens the `Represent!` app. A home screen as follows would show. The user can enter an address / ZIP code, select their current location, or select a random location in the United States. 
-  <img width = 30% height = auto src = "images/mainView.png">
+  <img src = "images/mainView.png">
 
 - **CONGRESSIONAL VIEW** 
 	
