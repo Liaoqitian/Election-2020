@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
@@ -86,11 +87,21 @@ public class CongressionalView extends AppCompatActivity {
                 Random r = new Random();
                 double randomLat = LAT_MIN + (LAT_MAX - LAT_MIN) * r.nextDouble();
                 double randomLng = LNG_MIN + (LNG_MAX - LNG_MIN) * r.nextDouble();
-                processRandomLocation(String.valueOf(randomLat), String.valueOf(randomLng));
+                processLatLon(String.valueOf(randomLat), String.valueOf(randomLng));
                 break;
             case "currentLocation":
                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-                getLocation();
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(CongressionalView.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                }
+                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        double lat = location.getLatitude(), lon = location.getLongitude();
+                        processLatLon(String.valueOf(lat), String.valueOf(lon));
+                    }
+                });
                 break;
         }
 
@@ -142,34 +153,10 @@ public class CongressionalView extends AppCompatActivity {
                 startActivity(startIntent);
             }
         });
-
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CongressionalView.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-        }
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                Location location = task.getResult();
-                if (location != null) {
-                    Geocoder geocoder = new Geocoder(CongressionalView.this, Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        address = addresses.get(0).getAddressLine(0);
-                        printInformation(address);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
     }
 
     /** Process a random location by convert LAT/LON to postal address, then printing out relevant information */
-    private void processRandomLocation(String lat, String lng) {
+    private void processLatLon(String lat, String lng) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String gps_URL = "?latlng=" + lat + "," + lng;
         String full_URL = GEO_URL + gps_URL + "&key=" + API_KEY;
@@ -204,7 +191,7 @@ public class CongressionalView extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         String cityName = null, stateName = null;
-                        JSONArray offices = null, officials = null;
+                        JSONArray offices, officials;
                         try {
                             cityName = ((JSONObject) response.get("normalizedInput")).getString("city");
                             stateName = ((JSONObject) response.get("normalizedInput")).getString("state");
