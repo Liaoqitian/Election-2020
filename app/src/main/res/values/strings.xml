@@ -21,6 +21,7 @@
     <string name="or">or</string>
     <string name="Name">Name</string>
     <string name="Party">Party</string>
+    <string name="Title">Title</string>
     <string name="blank"></string>
 
     <string name="ballotTitle">Additional Election Info In</string>

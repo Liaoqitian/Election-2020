@@ -54,7 +54,7 @@ public class CongressionalView extends AppCompatActivity {
     static String ADDRESS = "16743 F Rd, Meade, KS 67864, USA";
 
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
-    private TextView partyOneTv, partyTwoTv, partyThreeTv;
+    private TextView partyOneTv, partyTwoTv, partyThreeTv, titleOneTv, titleTwoTv, titleThreeTv;
     private ImageView profileOneIv, profileTwoIv, profileThreeIv;
     private Button nameOneBtn, nameTwoBtn, nameThreeBtn, locationBtn;
     private String address, location, nameOne, nameTwo, nameThree, partyOne, partyTwo, partyThree, phoneOne, phoneTwo, phoneThree, websiteOne, websiteTwo, websiteThree,
@@ -77,6 +77,9 @@ public class CongressionalView extends AppCompatActivity {
         partyTwoTv = findViewById(R.id.PartyTwo);
         nameThreeBtn = findViewById(R.id.NameThree);
         partyThreeTv = findViewById(R.id.PartyThree);
+        titleOneTv = findViewById(R.id.titleOne);
+        titleTwoTv = findViewById(R.id.titleTwo);
+        titleThreeTv = findViewById(R.id.titleThree);
 
         switch (type) {
             case "inputLocation":
@@ -114,6 +117,7 @@ public class CongressionalView extends AppCompatActivity {
                 startIntent.putExtra("website", websiteOne);
                 startIntent.putExtra("phone", phoneOne);
                 startIntent.putExtra("photoUrl", photoUrlOne);
+                startIntent.putExtra("title", "U.S. Senator");
                 startActivity(startIntent);
             }
         });
@@ -127,6 +131,7 @@ public class CongressionalView extends AppCompatActivity {
                 startIntent.putExtra("website", websiteTwo);
                 startIntent.putExtra("phone", phoneTwo);
                 startIntent.putExtra("photoUrl", photoUrlTwo);
+                startIntent.putExtra("title", "U.S. Senator");
                 startActivity(startIntent);
             }
         });
@@ -140,6 +145,7 @@ public class CongressionalView extends AppCompatActivity {
                 startIntent.putExtra("website", websiteThree);
                 startIntent.putExtra("phone", phoneThree);
                 startIntent.putExtra("photoUrl", photoUrlThree);
+                startIntent.putExtra("title", "U.S. Representative");
                 startActivity(startIntent);
             }
         });
@@ -203,6 +209,7 @@ public class CongressionalView extends AppCompatActivity {
                                     for (int j = 0; j < index.length(); j++) {
                                         final JSONObject person = officials.getJSONObject((index.getInt(j)));
                                         if (j == 0) {
+                                            titleOneTv.setText("U.S. Senator");
                                             // Set up the name of U.S. Senator One
                                             nameOne = person.getString("name");
                                             SpannableString name = new SpannableString(person.getString("name"));
@@ -226,6 +233,7 @@ public class CongressionalView extends AppCompatActivity {
                                             phoneOne = person.getJSONArray("phones").getString(0);
                                             websiteOne = person.getJSONArray("urls").getString(0);
                                         } else if (j == 1) {
+                                            titleTwoTv.setText("U.S. Senator");
                                             // Set up the name of U.S. Senator Two
                                             nameTwo = person.getString("name");
                                             SpannableString name = new SpannableString(person.getString("name"));
@@ -253,7 +261,7 @@ public class CongressionalView extends AppCompatActivity {
                                 } else if (offices.getJSONObject(i).getString("name").equals("U.S. Representative")) {
                                     JSONArray index = offices.getJSONObject(i).getJSONArray("officialIndices");
                                     JSONObject person = officials.getJSONObject((index.getInt(0)));
-
+                                    titleThreeTv.setText("U.S. Representative");
                                     // Set up the name of U.S. Representative
                                     nameThree = person.getString("name");
                                     SpannableString name = new SpannableString(person.getString("name"));

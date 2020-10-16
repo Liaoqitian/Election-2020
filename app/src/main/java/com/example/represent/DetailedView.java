@@ -18,7 +18,7 @@ import java.io.InputStream;
 public class DetailedView extends AppCompatActivity {
 
     ImageView bigProfileIv;
-    TextView nameTv, partyTv, websiteTv, phoneTv;
+    TextView nameTv, titleTv, partyTv, websiteTv, phoneTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +27,20 @@ public class DetailedView extends AppCompatActivity {
 
         String photoUrl = getIntent().getExtras().getString("photoUrl");
         String name = getIntent().getExtras().getString("name");
+        String title = getIntent().getExtras().getString("title");
         String party = getIntent().getExtras().getString("party");
         String phone = getIntent().getExtras().getString("phone");
         String website = getIntent().getExtras().getString("website");
 
         bigProfileIv = findViewById(R.id.bigProfile);
+        titleTv = findViewById(R.id.title);
         nameTv = findViewById(R.id.name);
         partyTv = findViewById(R.id.party);
         websiteTv = findViewById(R.id.website);
         phoneTv = findViewById(R.id.phone);
 
         nameTv.setText(name);
+        titleTv.setText(title);
         partyTv.setText(party + " Party");
         if (party.equals("Republican")) partyTv.setTextColor(Color.RED);
         else if (party.equals("Democratic")) partyTv.setTextColor(Color.BLUE);
