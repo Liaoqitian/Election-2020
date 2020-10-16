@@ -24,4 +24,9 @@
     <string name="blank"></string>
 
     <string name="ballotTitle">Additional Election Info In</string>
+    <string name="electionEvent">Election Event</string>
+    <string name="pollingLocation">Polling Location</string>
+    <string name="dropOffLocation">Drop-Off Location</string>
+    <string name="ballotMeasures">Ballot Measures</string>
+
 </resources>
