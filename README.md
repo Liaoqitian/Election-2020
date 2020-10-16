@@ -19,7 +19,7 @@ https://www.youtube.com/watch?v=rDSYECEj4tk&t=2s
   <center><img width = 30% height = auto src = "images/mainView.png"></center>
 
 - **CONGRESSIONAL VIEW**  
-	After the user inputs the location using any of the three ways on the MAIN VIEW, the app will lookup the three congressional representatives for the input location code. The CONGRESSIONAL VIEW as follows will pop up. There will be two US Senators and one US representative and the view displays the following information about each of these members of Congress: 
+	After the user inputs the location using any of the three ways on the MAIN VIEW, the app will lookup the three congressional representatives for the input location code. The CONGRESSIONAL VIEW as follows will pop up. There will be two US Senators and one US representative and the view displays the following information about each of these members of Congress:
 	- (Senator or Representative) Full Name
 	- A picture of them. A default picture will be displayed when they have no image
 	- Their position in congress
@@ -28,7 +28,7 @@ https://www.youtube.com/watch?v=rDSYECEj4tk&t=2s
 	<img width = 30% height = auto src = "images/congressionalView.png">
 	
 - **DETAILED VIEW**  
-	The user could click on the <ins>NAME</ins> of the congressperson to get additional information about this person. The DETAILED VIEW will show and it includes the following information: 
+	The user could click on the <ins>NAME</ins> of the congressperson to get additional information about this person. The DETAILED VIEW will show and it includes the following information:
 	- (Senator or Representative) Full Name
 	- Picture
 	- Position In Congress
@@ -39,10 +39,11 @@ https://www.youtube.com/watch?v=rDSYECEj4tk&t=2s
 	<img width = 30% height = auto src = "images/detailedView.png">
 	
 - **BALLOT VIEW**  
-	Alternatively, back in CONGRESSIONAL VIEW, the user can click on <ins>LOCATION</ins> to learn about additional election information at the target location. The BALLOT VIEW would show and it includes the following information: 
+	Alternatively, back in CONGRESSIONAL VIEW, the user can click on <ins>LOCATION</ins> to learn about additional election information at the target location. The BALLOT VIEW would show and it includes the following information:
 	- Polling locations nearby (if applicable)
 	- Ballot Drop-off locations nearby (if applicable)
-	- Additional ballot measures  
+	- Additional ballot measures
+
 	<img width = 30% height = auto src = "images/ballotView.png">
 
 ## Contact
