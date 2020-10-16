@@ -24,8 +24,9 @@ https://www.youtube.com/watch?v=rDSYECEj4tk&t=2s
 	After the user inputs the location using any of the three ways on the MAIN VIEW, the app will lookup the three congressional representatives for the input location code. The CONGRESSIONAL VIEW as follows will pop up. There will be two US Senators and one US representative and the view displays the following information about each of these members of Congress: 
 	
 	1. (Senator or Representative) Full Name
-	2. A picture of them. A default picture will be displayed when they have no image.
-	3. Party (Democrat, Republican, Independent). Democratic Party will be in blue; Republican Party will be in red.  
+	2. A picture of them. A default picture will be displayed when they have no image
+	3. Their position in congress
+	3. Party (Democrat, Republican, Independent). Democratic Party will be in blue; Republican Party will be in red  
 	  
 	<img width = 30% height = auto src = "images/congressionalView.png">
 	
@@ -34,14 +35,13 @@ https://www.youtube.com/watch?v=rDSYECEj4tk&t=2s
 	The user could click on the <ins>NAME</ins> of the congressperson to get additional information about this person. The DETAILED VIEW will show and it includes the following information: 
 	
 	1. (Senator or Representative) Full Name
-	2. A picture of them
-	3. Party
-	4. Website 
-	5. Phone Number  
+	2. Picture
+	3. Position In Congress
+	4. Party
+	5. Website 
+	6. Phone Number  
 	
 	<img width = 30% height = auto src = "images/detailedView.png">
-	
-	  
 	
 - **BALLOT VIEW**
 	
