@@ -3,10 +3,10 @@
 ## Table of Contents
   - [User Manual (Video)](#User-Manual-Video)
   - [User Manual (Text and Images)](#User-Manual-Text-and-Images)
-      	- [MAIN VIEW](#MAIN-VIEW)
-      	- [CONGRESSIONAL VIEW](#CONGRESSIONAL-VIEW)
-      	- [DETAILED VIEW](#DETAILED-VIEW)
-      	- [BALLOT VIEW](#BALLOT-VIEW)
+     - [MAIN VIEW](#MAIN-VIEW)
+     - [CONGRESSIONAL VIEW](#CONGRESSIONAL-VIEW)
+     - [DETAILED VIEW](#DETAILED-VIEW)
+     - [BALLOT VIEW](#BALLOT-VIEW)
   - [Contact](#Contact)
 
 ## User Manual (Video)
