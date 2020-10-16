@@ -25,7 +25,7 @@ https://www.youtube.com/watch?v=rDSYECEj4tk&t=2s
 	
 	1. (Senator or Representative) Full Name
 	2. A picture of them. A default picture will be displayed when they have no image.
-	3. Party (Democrat, Republican, Independent). Democratic Party will be in blue, Republican Party will be in red.  
+	3. Party (Democrat, Republican, Independent). Democratic Party will be in blue; Republican Party will be in red.  
 	  
 	<img width = 30% height = auto src = "images/congressionalView.png">
 	
