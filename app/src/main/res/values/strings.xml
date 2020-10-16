@@ -22,4 +22,6 @@
     <string name="Name">Name</string>
     <string name="Party">Party</string>
     <string name="blank"></string>
+
+    <string name="ballotTitle">Additional Election Info In</string>
 </resources>

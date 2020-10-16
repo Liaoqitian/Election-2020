@@ -7,17 +7,13 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,7 +28,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -41,10 +36,6 @@ import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -61,12 +52,11 @@ public class CongressionalView extends AppCompatActivity {
     static String VOTE_URL = "https://www.googleapis.com/civicinfo/v2/voterinfo";
     static String ADDRESS = "16743 F Rd, Meade, KS 67864, USA";
 
-    /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
     private TextView partyOneTv, partyTwoTv, partyThreeTv;
     private ImageView profileOneIv, profileTwoIv, profileThreeIv;
     private Button nameOneBtn, nameTwoBtn, nameThreeBtn, locationBtn;
-    private String address, nameOne, nameTwo, nameThree, partyOne, partyTwo, partyThree, phoneOne, phoneTwo, phoneThree, websiteOne, websiteTwo, websiteThree,
+    private String address, location, nameOne, nameTwo, nameThree, partyOne, partyTwo, partyThree, phoneOne, phoneTwo, phoneThree, websiteOne, websiteTwo, websiteThree,
             photoUrlOne, photoUrlTwo, photoUrlThree, linkOne, linkTwo, linkThree;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -143,6 +133,16 @@ public class CongressionalView extends AppCompatActivity {
             }
         });
 
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(getApplicationContext(), BallotView.class);
+                startIntent.putExtra("address", address);
+                startIntent.putExtra("location", location);
+                startActivity(startIntent);
+            }
+        });
+
     }
 
     private void getLocation() {
@@ -158,7 +158,7 @@ public class CongressionalView extends AppCompatActivity {
                     Geocoder geocoder = new Geocoder(CongressionalView.this, Locale.getDefault());
                     try {
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        String address = addresses.get(0).getAddressLine(0);
+                        address = addresses.get(0).getAddressLine(0);
                         printInformation(address);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -167,7 +167,6 @@ public class CongressionalView extends AppCompatActivity {
             }
         });
     }
-
 
     /** Process a random location by convert LAT/LON to postal address, then printing out relevant information */
     private void processRandomLocation(String lat, String lng) {
@@ -296,7 +295,8 @@ public class CongressionalView extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        SpannableString locationText = new SpannableString(cityName + ", " + stateName);
+                        location = cityName + ", " + stateName;
+                        SpannableString locationText = new SpannableString(location);
                         locationText.setSpan(new UnderlineSpan(), 0, locationText.length(), 0);
                         locationBtn.setText(locationText);
                     }
