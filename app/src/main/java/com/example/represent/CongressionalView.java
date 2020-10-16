@@ -63,9 +63,9 @@ public class CongressionalView extends AppCompatActivity {
 
     /** crude way to set range of lat/lng for inside US – this is very imcomplete and better methods exist*/
     double LAT_MAX = 41.8, LAT_MIN = 33.8, LNG_MAX = -81.5, LNG_MIN = -116.2;
-    private TextView locationTv, partyOneTv, partyTwoTv, partyThreeTv;
+    private TextView partyOneTv, partyTwoTv, partyThreeTv;
     private ImageView profileOneIv, profileTwoIv, profileThreeIv;
-    private Button nameOneBtn, nameTwoBtn, nameThreeBtn;
+    private Button nameOneBtn, nameTwoBtn, nameThreeBtn, locationBtn;
     private String address, nameOne, nameTwo, nameThree, partyOne, partyTwo, partyThree, phoneOne, phoneTwo, phoneThree, websiteOne, websiteTwo, websiteThree,
             photoUrlOne, photoUrlTwo, photoUrlThree, linkOne, linkTwo, linkThree;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -79,7 +79,7 @@ public class CongressionalView extends AppCompatActivity {
         profileOneIv = findViewById(R.id.profileOne);
         profileTwoIv = findViewById(R.id.profileTwo);
         profileThreeIv = findViewById(R.id.profileThree);
-        locationTv = findViewById(R.id.location);
+        locationBtn = findViewById(R.id.location);
         nameOneBtn = findViewById(R.id.NameOne);
         partyOneTv = findViewById(R.id.PartyOne);
         nameTwoBtn = findViewById(R.id.NameTwo);
@@ -148,7 +148,6 @@ public class CongressionalView extends AppCompatActivity {
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            locationTv.setText("no permission");
             ActivityCompat.requestPermissions(CongressionalView.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -297,12 +296,14 @@ public class CongressionalView extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        locationTv.setText(cityName + ", " + stateName);
+                        SpannableString locationText = new SpannableString(cityName + ", " + stateName);
+                        locationText.setSpan(new UnderlineSpan(), 0, locationText.length(), 0);
+                        locationBtn.setText(locationText);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                locationTv.setText("Please enter a valid address!");
+                locationBtn.setText("Invalid Location");
             }
         });
         queue.add(stringRequest);

@@ -34,11 +34,12 @@ tools:context=".CongressionalView">
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.072" />
 
-    <TextView
+    <Button
         android:id="@+id/location"
         android:layout_width="wrap_content"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:background="#00FFFFFF"
         android:text="@string/invalidAddress"
         android:textColor="#FFFFFF"
         android:textSize="26sp"
