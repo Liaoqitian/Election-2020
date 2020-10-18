@@ -27,7 +27,7 @@ https://www.youtube.com/watch?v=meWuttQxQkI&feature=youtu.be
 	The user could click on the <ins>NAME</ins> of the congressperson to get additional information about this person. The DETAILED VIEW will show and it includes the following information:
 	- (Senator or Representative) Full Name
 	- Picture
-	- Position In Congress
+	- Position in Congress
 	- Party
 	- Website 
 	- Phone Number  
