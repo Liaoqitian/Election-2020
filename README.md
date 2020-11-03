@@ -1,4 +1,4 @@
-# Election - Vote
+# Election - 2020
 
 ## Table of Contents
   - [User Manual (Video)](#User-Manual-Video)
