@@ -1,4 +1,4 @@
-# Election - 2020
+# Election Information Application
 
 ## Table of Contents
   - [User Manual (Video)](#User-Manual-Video)
