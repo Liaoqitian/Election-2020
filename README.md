@@ -5,10 +5,10 @@
   - [User Manual (Text and Images)](#User-Manual-Text-and-Images)
   - [Contact](#Contact)
 
-## User Manual (Video)
+## User Manual Video
 https://www.youtube.com/watch?v=meWuttQxQkI&feature=youtu.be
 
-## User Manual (Text and Images)
+## User Manual Text and Images
 
 - **MAIN VIEW**  
   A user opens the `Represent!` app. A home screen as follows would show. The user can enter an address / ZIP code, select their current location, or select a random location in the United States.  
