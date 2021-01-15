@@ -1,4 +1,4 @@
-# Election Information Application
+# Election Information Android App
 
 ## Table of Contents
   - [User Manual (Video)](#User-Manual-Video)
